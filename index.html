@@ -81,9 +81,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function () {
-    // TODO: 部署後請更新為實際的 API URL
-    const apiBaseUrl = "http://localhost:5000/api";  // 本地測試
-    // const apiBaseUrl = "https://your-app.azurewebsites.net/api";  // Azure 部署後使用
+    // API URL - 已部署到 Render
+    const apiBaseUrl = "https://personnel-api-mrjg.onrender.com/api";
+    // const apiBaseUrl = "http://localhost:5000/api";  // 本地測試用
     
     const apiLoad = apiBaseUrl + "/LoadPersonnelData";
     const apiAdd = apiBaseUrl + "/AddPersonnelData";
