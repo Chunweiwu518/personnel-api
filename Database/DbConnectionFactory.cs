@@ -1,5 +1,4 @@
 using System;
-using System.Configuration;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using Npgsql;
@@ -26,8 +25,7 @@ namespace DiBackend.Database
             _connectionString = Environment.GetEnvironmentVariable("DATABASE_URL")  // Railway/Render
                 ?? Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
                 ?? Environment.GetEnvironmentVariable("SQLCONNSTR_DefaultConnection")
-                ?? ConfigurationManager.ConnectionStrings["DefaultConnection"]?.ConnectionString
-                ?? throw new InvalidOperationException("找不到資料庫連線字串");
+                ?? "Server=localhost;Database=PersonnelDB;Trusted_Connection=True;TrustServerCertificate=True;";  // 本地預設值
 
             // 自動偵測資料庫類型
             _dbType = _connectionString.Contains("postgres") || _connectionString.Contains("Host=")
