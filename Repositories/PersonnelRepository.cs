@@ -59,12 +59,29 @@ namespace DiBackend.Repositories
         {
             using (var connection = _dbFactory.CreateConnection())
             {
-                var sql = @"
-                    INSERT INTO Personnel (Name, IdentityNumber, Department, Email, Phone, CreatedAt)
-                    VALUES (@Name, @IdentityNumber, @Department, @Email, @Phone, @CreatedAt);
-                    SELECT CAST(SCOPE_IDENTITY() as int);";
-
                 personnel.CreatedAt = DateTime.Now;
+
+                // 判斷資料庫類型
+                var connectionString = connection.ConnectionString;
+                string sql;
+
+                if (connectionString.Contains("Host=") || connectionString.Contains("Server=") && connectionString.Contains("5432"))
+                {
+                    // PostgreSQL
+                    sql = @"
+                        INSERT INTO Personnel (Name, IdentityNumber, Department, Email, Phone, CreatedAt)
+                        VALUES (@Name, @IdentityNumber, @Department, @Email, @Phone, @CreatedAt)
+                        RETURNING PersonnelId;";
+                }
+                else
+                {
+                    // MSSQL
+                    sql = @"
+                        INSERT INTO Personnel (Name, IdentityNumber, Department, Email, Phone, CreatedAt)
+                        VALUES (@Name, @IdentityNumber, @Department, @Email, @Phone, @CreatedAt);
+                        SELECT CAST(SCOPE_IDENTITY() as int);";
+                }
+
                 return connection.ExecuteScalar<int>(sql, personnel);
             }
         }
