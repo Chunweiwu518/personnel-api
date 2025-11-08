@@ -1,0 +1,9 @@
+[phases.setup]
+nixPkgs = ['dotnet-sdk_6']
+
+[phases.build]
+cmds = ['dotnet publish -c Release -o out']
+
+[start]
+cmd = 'cd out && dotnet DiBackend.dll'
+

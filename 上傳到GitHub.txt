@@ -1,0 +1,66 @@
+========================================
+上傳到 GitHub 的完整步驟
+========================================
+
+步驟 1: 在 GitHub 建立新 Repository
+------------------------------------
+1. 前往 https://github.com/
+2. 登入你的帳號
+3. 點擊右上角 "+" > "New repository"
+4. 設定：
+   - Repository name: personnel-api
+   - Description: 人員管理系統後端 API
+   - 選擇 Public
+   - 不要勾選 "Add a README file"
+5. 點擊 "Create repository"
+6. 記下 Repository URL（例如：https://github.com/你的帳號/personnel-api.git）
+
+
+步驟 2: 在專案目錄執行以下命令
+------------------------------------
+開啟 PowerShell 或 CMD，切換到專案目錄：
+
+cd C:\Users\wuchu\Soho\Di
+
+然後執行：
+
+# 初始化 Git
+git init
+
+# 新增所有檔案
+git add .
+
+# 提交
+git commit -m "Initial commit - Personnel Management System"
+
+# 設定主分支名稱
+git branch -M main
+
+# 連接到 GitHub（替換成你的 Repository URL）
+git remote add origin https://github.com/你的帳號/personnel-api.git
+
+# 推送到 GitHub
+git push -u origin main
+
+
+步驟 3: 確認上傳成功
+------------------------------------
+1. 重新整理 GitHub 頁面
+2. 應該會看到所有檔案已上傳
+3. 確認以下檔案存在：
+   - DiBackend.csproj
+   - Program.cs
+   - Models/Personnel.cs
+   - Repositories/PersonnelRepository.cs
+   - Database/DbConnectionFactory.cs
+   - Database/InitDatabase_PostgreSQL.sql
+   - railway.json
+   - nixpacks.toml
+   - index.html
+
+
+完成後，繼續進行 Railway 部署！
+請參考：部署步驟_Railway.md
+
+========================================
+
