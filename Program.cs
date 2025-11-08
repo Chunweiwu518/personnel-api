@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using DiBackend.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,19 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+// 初始化資料庫
+try
+{
+    Console.WriteLine("正在初始化資料庫...");
+    DatabaseInitializer.Initialize();
+    Console.WriteLine("資料庫初始化成功！");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"資料庫初始化失敗: {ex.Message}");
+    // 繼續執行，讓應用程式啟動（可以查看錯誤訊息）
+}
 
 // 設定 HTTP 請求管線
 if (app.Environment.IsDevelopment())

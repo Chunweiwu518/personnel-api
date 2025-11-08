@@ -1,0 +1,69 @@
+========================================
+初始化 Render PostgreSQL 資料庫
+========================================
+
+方法 1：使用 Render 的 Connect 功能
+========================================
+1. 點擊右上角的 "Connect" 按鈕
+2. 會看到連線資訊和 PSQL 指令
+3. 如果有線上 Shell，直接在那裡執行以下 SQL
+
+
+方法 2：使用線上工具（推薦）
+========================================
+使用這個免費線上工具：
+https://sqliteonline.com/
+
+步驟：
+1. 開啟網站
+2. 點擊 "PostgreSQL"
+3. 點擊 "Connect to Database"
+4. 輸入連線資訊：
+   Host: dpg-d47f9nq4d50c7384nku0-a.oregon-postgres.render.com
+   Port: 5432
+   Database: personneldb
+   User: personneluser
+   Password: 4qqyD9KKMt3KwKJqL3eBzRDxzVPrCERi
+
+5. 連線成功後，貼上以下 SQL 並執行
+
+
+方法 3：先部署應用程式，讓程式自動建立資料表
+========================================
+我們可以修改程式碼，讓它在啟動時自動建立資料表！
+這樣就不需要手動執行 SQL 了。
+
+你想用這個方法嗎？
+
+
+========================================
+要執行的 SQL（複製整段）
+========================================
+
+DROP TABLE IF EXISTS Personnel;
+
+CREATE TABLE Personnel (
+    PersonnelId SERIAL PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL,
+    IdentityNumber VARCHAR(20) NOT NULL UNIQUE,
+    Department VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    Phone VARCHAR(20) NOT NULL,
+    CreatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_personnel_createdat ON Personnel(CreatedAt DESC);
+CREATE INDEX idx_personnel_identitynumber ON Personnel(IdentityNumber);
+CREATE INDEX idx_personnel_department ON Personnel(Department);
+
+INSERT INTO Personnel (Name, IdentityNumber, Department, Email, Phone, CreatedAt) VALUES
+    ('張小明', 'A123456789', '資訊部', 'zhang.xiaoming@company.com', '0912-345-678', CURRENT_TIMESTAMP),
+    ('李美華', 'B234567890', '人資部', 'li.meihua@company.com', '0923-456-789', CURRENT_TIMESTAMP - INTERVAL '1 hour'),
+    ('王大偉', 'C345678901', '業務部', 'wang.dawei@company.com', '0934-567-890', CURRENT_TIMESTAMP - INTERVAL '2 hours'),
+    ('陳雅婷', 'D456789012', '財務部', 'chen.yating@company.com', '0945-678-901', CURRENT_TIMESTAMP - INTERVAL '3 hours'),
+    ('林志明', 'E567890123', '資訊部', 'lin.zhiming@company.com', '0956-789-012', CURRENT_TIMESTAMP - INTERVAL '4 hours');
+
+SELECT * FROM Personnel ORDER BY CreatedAt DESC;
+
+========================================
+
