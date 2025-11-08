@@ -109,13 +109,20 @@ $(document).ready(function () {
                 }
 
                 $.each(res.persons, function (i, item) {
+                    // 支援 PascalCase 和 camelCase
+                    const name = item.name || item.Name || '';
+                    const identityNumber = item.identityNumber || item.IdentityNumber || '';
+                    const department = item.department || item.Department || '';
+                    const email = item.email || item.Email || '';
+                    const phone = item.phone || item.Phone || '';
+
                     const row = `
                         <tr>
-                            <td>${item.Name}</td>
-                            <td>${item.IdentityNumber}</td>
-                            <td>${item.Department}</td>
-                            <td>${item.Email}</td>
-                            <td>${item.Phone}</td>
+                            <td>${name}</td>
+                            <td>${identityNumber}</td>
+                            <td>${department}</td>
+                            <td>${email}</td>
+                            <td>${phone}</td>
                         </tr>`;
                     tableBody.append(row);
                 });
